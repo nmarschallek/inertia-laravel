@@ -22,6 +22,7 @@ class ServiceProvider extends BaseServiceProvider
     {
         $this->registerBladeDirective();
         $this->registerRequestMacro();
+        $this->registerResponseMacro();
         $this->registerRouterMacro();
         $this->registerMiddleware();
         $this->shareValidationErrors();
@@ -38,6 +39,13 @@ class ServiceProvider extends BaseServiceProvider
     {
         Request::macro('inertia', function () {
             return boolval($this->header('X-Inertia'));
+        });
+    }
+
+    private function registerResponseMacro()
+    {
+        \Illuminate\Http\Response::macro('inertia', function ($component, $props = []) {
+            return Inertia::render($component, $props);
         });
     }
 

@@ -36,6 +36,14 @@ class ServiceProviderTest extends TestCase
         $this->assertTrue($request->inertia());
     }
 
+    public function test_response_macro_is_registered()
+    {
+        $responseMacro = response()->inertia('Test', ['foo' => 'bar']);
+        $responseInertia = Inertia::render('Test', ['foo' => 'bar']);
+
+        $this->assertEquals($responseMacro, $responseInertia);
+    }
+
     public function test_route_macro_is_registered()
     {
         $route = Route::inertia('/', 'User/Edit', ['user' => ['name' => 'Jonathan']]);
